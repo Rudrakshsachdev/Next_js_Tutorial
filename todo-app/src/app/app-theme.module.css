@@ -141,7 +141,9 @@
   background: linear-gradient(135deg, #8afac8, #76d8ff);
   box-shadow: 0 10px 20px rgba(79, 216, 181, 0.35);
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .button:hover {
