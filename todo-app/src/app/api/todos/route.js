@@ -1,19 +1,21 @@
-let todos = [];
+import { prisma } from "@/lib/prisma";
 
-export function GET() {
-    return Response.json(todos); 
+export async function GET() {
+    const todos = await prisma.todo.findMany({
+        orderBy: { createdAt: "desc" },
+    });
+    return Response.json(todos);
 }
 
 export async function POST(request) {
     // the body of the request is a stream, we need to parse it to json
     const body = await request.json();
 
-    const newTodo = {
-        id: Date.now(),
-        title: body.title,
-    };
-
-    todos.push(newTodo);
+    const newTodo = await prisma.todo.create({
+        data: {
+            title: body.title,
+        },
+    });
 
     return Response.json(newTodo);
 }
