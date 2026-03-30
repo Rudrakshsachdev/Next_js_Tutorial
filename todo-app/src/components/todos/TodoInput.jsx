@@ -3,11 +3,18 @@
 import { useState } from "react";
 import styles from "./TodoInput.module.css";
 
-export default function TodoInput() {
+export default function TodoInput({ setTodos }) {
   const [text, setText] = useState("");
 
   const handleAdd = () => {
-    console.log(text);
+    if (!text.trim()) return;
+
+    const newTodo = {
+      id: Date.now(),
+      title: text,
+    };
+
+    setTodos((prev) => [...prev, newTodo]);
     setText("");
   };
 

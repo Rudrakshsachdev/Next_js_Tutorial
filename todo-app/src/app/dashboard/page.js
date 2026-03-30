@@ -1,13 +1,11 @@
+"use client";
 import TodoInput from "@/components/todos/TodoInput";
 import TodoList from "@/components/todos/TodoList";
 import styles from "../app-theme.module.css";
+import { useState } from "react";
 
 export default function Dashboard() {
-  const todos = [
-    { id: 1, title: "Plan sprint backlog" },
-    { id: 2, title: "Review product notes" },
-    { id: 3, title: "Prepare release checklist" },
-  ];
+  const [todos, setTodos] = useState([]);
 
   return (
     <main className={styles.pageShell}>
@@ -21,8 +19,8 @@ export default function Dashboard() {
         </div>
 
         <div className={`${styles.card} ${styles.stack}`}>
-          <TodoInput />
-          <TodoList todos={todos} />
+          <TodoInput setTodos={setTodos} />
+          <TodoList todos={todos} setTodos={setTodos} />
         </div>
       </section>
     </main>
