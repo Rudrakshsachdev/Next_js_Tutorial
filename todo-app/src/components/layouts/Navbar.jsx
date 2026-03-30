@@ -29,6 +29,12 @@ export default function Navbar() {
           <Link href="/dashboard" className={styles.cta}>
             Start Working
           </Link>
+          <Link href="/auth/login" className={styles.linkItem}>
+            Login
+          </Link>
+          <Link href="/auth/register" className={styles.linkItem}>
+            Register
+          </Link>
         </div>
       </nav>
     </header>
