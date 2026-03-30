@@ -1,0 +1,5 @@
+.list {
+  margin-top: 6px;
+  display: grid;
+  gap: 10px;
+}

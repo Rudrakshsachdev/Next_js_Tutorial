@@ -1,10 +1,28 @@
-export default async function todoid({params}) {
-    const {todoid} = await params;
+import Link from "next/link";
+import styles from "../../app-theme.module.css";
 
-    return (
-        <div>
-            <h1>Todo ID: {todoid}</h1>
-            <p>This is the page for todo with ID: {todoid}</p>
+export default async function todoid({ params }) {
+  const { todoid } = await params;
+
+  return (
+    <main className={styles.pageShell}>
+      <section className={styles.container}>
+        <div className={styles.card}>
+          <h1 className={styles.heading}>Todo #{todoid}</h1>
+          <p className={styles.subheading}>
+            This page contains details for todo item {todoid}. Keep notes,
+            progress, and next steps here.
+          </p>
+          <div className={styles.actions}>
+            <Link href="/dashboard" className={styles.primaryButton}>
+              Back to Dashboard
+            </Link>
+            <Link href="/" className={styles.linkButton}>
+              Go Home
+            </Link>
+          </div>
         </div>
-    )
+      </section>
+    </main>
+  );
 }

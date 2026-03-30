@@ -1,0 +1,108 @@
+.pageShell {
+  min-height: calc(100vh - 96px);
+  padding: 28px 20px 40px;
+  background:
+    radial-gradient(
+      circle at 15% -20%,
+      rgba(120, 246, 191, 0.28),
+      transparent 45%
+    ),
+    radial-gradient(
+      circle at 85% -25%,
+      rgba(114, 169, 255, 0.24),
+      transparent 44%
+    ),
+    linear-gradient(135deg, #0b1119, #101b2b 45%, #122427);
+}
+
+.container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  gap: 20px;
+}
+
+.card {
+  background: rgba(9, 15, 26, 0.66);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 18px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.24);
+  padding: 22px;
+}
+
+.heading {
+  margin: 0;
+  color: #f5fbff;
+  font-size: clamp(1.5rem, 1.1rem + 1.5vw, 2.2rem);
+  line-height: 1.15;
+  letter-spacing: 0.01em;
+}
+
+.subheading {
+  margin: 8px 0 0;
+  color: rgba(223, 235, 255, 0.82);
+  max-width: 62ch;
+  line-height: 1.6;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.linkButton,
+.primaryButton {
+  text-decoration: none;
+  border-radius: 12px;
+  padding: 10px 16px;
+  font-weight: 600;
+  font-size: 0.92rem;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.linkButton {
+  color: rgba(239, 246, 255, 0.93);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.linkButton:hover {
+  transform: translateY(-1px);
+  background: rgba(122, 232, 209, 0.18);
+  border-color: rgba(122, 232, 209, 0.74);
+}
+
+.primaryButton {
+  color: #0a2518;
+  background: linear-gradient(135deg, #8afac8, #76d8ff);
+  border: 1px solid transparent;
+  box-shadow: 0 10px 20px rgba(79, 216, 181, 0.35);
+}
+
+.primaryButton:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 24px rgba(79, 216, 181, 0.42);
+}
+
+.stack {
+  display: grid;
+  gap: 14px;
+}
+
+@media (max-width: 720px) {
+  .pageShell {
+    min-height: calc(100vh - 84px);
+    padding: 18px 12px 24px;
+  }
+
+  .card {
+    padding: 18px;
+  }
+}
