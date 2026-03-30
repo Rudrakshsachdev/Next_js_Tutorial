@@ -1,21 +1,40 @@
 import { prisma } from "@/lib/prisma";
+import { NextResponse } from "next/server";
 
 export async function GET() {
+  try {
     const todos = await prisma.todo.findMany({
-        orderBy: { createdAt: "desc" },
+      orderBy: { createdAt: "desc" },
     });
-    return Response.json(todos);
+    return NextResponse.json(todos);
+  } catch (error) {
+    return NextResponse.json(
+      { error: "Failed to fetch todos", details: String(error) },
+      { status: 500 },
+    );
+  }
 }
 
 export async function POST(request) {
-    // the body of the request is a stream, we need to parse it to json
+  try {
+    // The body of the request is a stream, we need to parse it to JSON.
     const body = await request.json();
 
+    if (!body?.title?.trim()) {
+      return NextResponse.json({ error: "Title is required" }, { status: 400 });
+    }
+
     const newTodo = await prisma.todo.create({
-        data: {
-            title: body.title,
-        },
+      data: {
+        title: body.title.trim(),
+      },
     });
 
-    return Response.json(newTodo);
+    return NextResponse.json(newTodo, { status: 201 });
+  } catch (error) {
+    return NextResponse.json(
+      { error: "Failed to create todo", details: String(error) },
+      { status: 500 },
+    );
+  }
 }

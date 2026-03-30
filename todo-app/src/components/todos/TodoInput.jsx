@@ -9,13 +9,22 @@ export default function TodoInput({ refreshTodos }) {
   const handleAdd = async () => {
     if (!text.trim()) return;
 
-    await fetch("/api/todos", {
+    const res = await fetch("/api/todos", {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({ title: text }),
     });
 
+    if (!res.ok) {
+      const message = await res.text();
+      console.error("Failed to create todo:", message);
+      return;
+    }
+
     setText("");
-    refreshTodos();
+    await refreshTodos();
   };
 
   return (

@@ -1,10 +1,13 @@
 "use client";
 import styles from "./TodoItem.module.css";
 
-export default function TodoItem({ todo, setTodos }) {
-  const handleDelete = () => {
-    setTodos((prev) => prev.filter((t) => t.id !== todo.id));
-  };
+export default function TodoItem({ todo, refreshTodos }) {
+  const handleDelete = async () => {
+    await fetch(`/api/todos/${todo.id}`, {
+      method: "DELETE",
+    });
+    refreshTodos();
+  }
 
   return (
     <div className={styles.item}>

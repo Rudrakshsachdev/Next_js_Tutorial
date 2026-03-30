@@ -9,7 +9,20 @@ export default function Dashboard() {
 
   const fetchTodosData = async () => {
     const res = await fetch("/api/todos");
-    return res.json();
+    const text = await res.text();
+
+    let data;
+    try {
+      data = text ? JSON.parse(text) : [];
+    } catch {
+      throw new Error("Invalid JSON response from /api/todos");
+    }
+
+    if (!res.ok) {
+      throw new Error(data?.error || "Failed to fetch todos");
+    }
+
+    return Array.isArray(data) ? data : [];
   };
 
   const refreshTodos = async () => {
@@ -21,9 +34,16 @@ export default function Dashboard() {
     let isMounted = true;
 
     const loadTodos = async () => {
-      const data = await fetchTodosData();
-      if (isMounted) {
-        setTodos(data);
+      try {
+        const data = await fetchTodosData();
+        if (isMounted) {
+          setTodos(data);
+        }
+      } catch (error) {
+        console.error("Failed to load todos:", error);
+        if (isMounted) {
+          setTodos([]);
+        }
       }
     };
 
@@ -47,7 +67,7 @@ export default function Dashboard() {
 
         <div className={`${styles.card} ${styles.stack}`}>
           <TodoInput refreshTodos={refreshTodos} />
-          <TodoList todos={todos} setTodos={setTodos} />
+          <TodoList todos={todos} refreshTodos={refreshTodos} />
         </div>
       </section>
     </main>
