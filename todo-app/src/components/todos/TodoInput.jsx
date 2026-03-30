@@ -3,19 +3,19 @@
 import { useState } from "react";
 import styles from "./TodoInput.module.css";
 
-export default function TodoInput({ setTodos }) {
+export default function TodoInput({ refreshTodos }) {
   const [text, setText] = useState("");
 
-  const handleAdd = () => {
+  const handleAdd = async () => {
     if (!text.trim()) return;
 
-    const newTodo = {
-      id: Date.now(),
-      title: text,
-    };
+    await fetch("/api/todos", {
+      method: "POST",
+      body: JSON.stringify({ title: text }),
+    });
 
-    setTodos((prev) => [...prev, newTodo]);
     setText("");
+    refreshTodos();
   };
 
   return (

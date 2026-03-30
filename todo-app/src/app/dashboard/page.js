@@ -2,10 +2,37 @@
 import TodoInput from "@/components/todos/TodoInput";
 import TodoList from "@/components/todos/TodoList";
 import styles from "../app-theme.module.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Dashboard() {
   const [todos, setTodos] = useState([]);
+
+  const fetchTodosData = async () => {
+    const res = await fetch("/api/todos");
+    return res.json();
+  };
+
+  const refreshTodos = async () => {
+    const data = await fetchTodosData();
+    setTodos(data);
+  };
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const loadTodos = async () => {
+      const data = await fetchTodosData();
+      if (isMounted) {
+        setTodos(data);
+      }
+    };
+
+    loadTodos();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   return (
     <main className={styles.pageShell}>
@@ -19,7 +46,7 @@ export default function Dashboard() {
         </div>
 
         <div className={`${styles.card} ${styles.stack}`}>
-          <TodoInput setTodos={setTodos} />
+          <TodoInput refreshTodos={refreshTodos} />
           <TodoList todos={todos} setTodos={setTodos} />
         </div>
       </section>
